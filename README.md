@@ -2,32 +2,30 @@
 
 ## Table des matières
 
-1. [Tuto: Comment sécuriser son serveur local ?](#tuto--comment-sécuriser-son-serveur-local-)
-2. [Démarrer le projet](#démarrer-le-projet)
-3. [Les failles](#les-failles)
-    3.1 [XSS](#xss-cross-site-scripting)
-    3.2 [NoSQL](#injection-nosql)
-    3.3 [LFI](#lfi-local-file-inclusion)
-    3.4 [RCE](#rce-remote-code-execution)
-    3.5 [JWT](#jwt-json-web-token)
-    3.6 [CSRF](#csrf-cross-site-request-forgery)
+1. [Démarrer le projet](#démarrer-le-projet)
+2. [Les failles](#les-failles)
+    2.1 [XSS](#xss-cross-site-scripting)
+    2.2 [NoSQL](#injection-nosql)
+    2.3 [LFI](#lfi-local-file-inclusion)
+    2.4 [RCE](#rce-remote-code-execution)
+    2.5 [JWT](#jwt-json-web-token)
+    2.6 [CSRF](#csrf-cross-site-request-forgery)
 
 --
 
-## Tuto : Comment sécuriser son serveur local ?
-
 ## Démarrer le projet
 
-Après avoir cloner le projet, mettez le en place avec les commandes suivantes :
+Après avoir cloner le projet, dans votre terminal, entrez les commandes suivantes :
 
-```Bash
-cd vuln-app
-docker-compose down -v && docker-compose up --build -d
-# attention l'installation peut être longue la première fois
-docker-compose exec web php seed.php # initialiser la base de données (une fois)
+```bash
+./setup-https.sh
+
+docker-compose up -d
+
+docker-compose exec web php seed.php
 ```
 
-Aller sur l'url suivante : <http://localhost:8080/>
+Aller sur l'url <https://localhost>
 
 --
 
@@ -75,8 +73,8 @@ logviewer.php?file=../../../../etc/passwd
 
 Tester la faille comme ceci :
 
-Cas normal : <http://localhost:8080/logviewer.php?file=access.log>
-Cas LFI : <http://localhost:8080/logviewer.php?file=../../../../etc/passwd>
+Cas normal : <https://localhost/logviewer.php?file=access.log>
+Cas LFI : <https://localhost/logviewer.php?file=../../../../etc/passwd>
 
 Ceci est possible car :
 
@@ -111,8 +109,8 @@ Tester la faille comme ceci :
     ?>
     ```
 
-2. Envoyer votre fichier sur <http://localhost:8080/upload.php>
-3. Aller ici <http://localhost:8080/uploads/shell.php?cmd=whoami>
+2. Envoyer votre fichier sur <https://localhost/upload.php>
+3. Aller ici <https://localhost/uploads/shell.php?cmd=whoami>
 
 ### JWT (JSON Web Token)
 

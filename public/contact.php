@@ -1,4 +1,8 @@
-<?php include 'includes/header.php'; ?>
+<?php 
+// Configuration - Changer pour activer/désactiver la vulnérabilité
+$VULNERABILITY = true; // true = vulnérable, false = sécurisé
+include 'includes/header.php';
+?>
 
 <h2>Contactez-nous</h2>
 <form method="POST">
@@ -9,8 +13,23 @@
 
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  echo "<p>Merci <strong>{$_POST['name']}</strong> pour votre message :</p>";
-  echo "<div>{$_POST['message']}</div>";
+  if ($VULNERABILITY) {
+    // ❌ CODE VULNÉRABLE - XSS
+    echo "<p>Merci <strong>{$_POST['name']}</strong> pour votre message :</p>";
+    echo "<div>{$_POST['message']}</div>";
+  } else {
+    // ✅ CODE SÉCURISÉ - Protection XSS
+    $name = htmlspecialchars($_POST['name'] ?? '', ENT_QUOTES, 'UTF-8');
+    $message = htmlspecialchars($_POST['message'] ?? '', ENT_QUOTES, 'UTF-8');
+    
+    if (strlen($_POST['name']) > 100 || strlen($_POST['message']) > 1000) {
+      echo "<p>❌ Entrée trop longue.</p>";
+      exit;
+    }
+    
+    echo "<p>Merci <strong>{$name}</strong> pour votre message :</p>";
+    echo "<div class='message-content'>{$message}</div>";
+  }
 }
 ?>
 

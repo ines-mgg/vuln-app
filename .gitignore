@@ -1,0 +1,49 @@
+# PHP dependencies
+vendor/
+composer.lock
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Docker volumes and data
+docker-compose.override.yml
+.docker/
+
+# SSL certificates (regenerate with setup-https.sh)
+ssl/
+nginx/ssl/
+
+# Uploaded files
+public/uploads/
+uploads/
+
+# Log files
+*.log
+logs/
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# MongoDB data (if running locally)
+data/
+mongo-data/

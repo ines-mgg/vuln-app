@@ -1,5 +1,10 @@
 <?php
+// Configuration - Changer pour activer/désactiver la vulnérabilité CSRF
+$VULNERABILITY = true; // true = vulnérable (pas de protection CSRF), false = sécurisé
+
 require 'vendor/autoload.php';
+require_once '../csrf_helper.php';
+csrf_start();
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
@@ -25,10 +30,34 @@ try {
         echo "<h1>👑 Panneau d'administration</h1>";
         echo "<p>Bienvenue <strong>$username</strong> !</p>";
 
+        // Handle admin actions
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (!$VULNERABILITY) {
+                csrf_check(); // ✅ CSRF Protection when secure
+            }
+            
+            if (isset($_POST['clear_logs'])) {
+                if ($VULNERABILITY) {
+                    echo "<p>⚠️ Logs cleared (CSRF vulnerable)</p>";
+                } else {
+                    echo "<p>✅ Logs cleared successfully (CSRF-protected)</p>";
+                }
+            }
+        }
+        
         echo "<ul>
             <li><a href='users.php'>Gestion des utilisateurs</a></li>
             <li><a href='csrf.html'>Exemple de faille CSRF</a></li>
         </ul>";
+        
+        // Admin form with conditional CSRF protection
+        echo "<h3>Admin Actions</h3>";
+        echo "<form method='POST'>";
+        if (!$VULNERABILITY) {
+            echo csrf_field(); // ✅ CSRF token only when secure
+        }
+        echo "<button type='submit' name='clear_logs' onclick='return confirm(\"Clear logs?\")'>Clear System Logs</button>";
+        echo "</form>";
     }
 
 } catch (Exception $e) {

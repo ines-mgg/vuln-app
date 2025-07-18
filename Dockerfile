@@ -12,6 +12,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 COPY ./public/ /var/www/html/
 # Copier les fichiers nécessaires pour le seed
 COPY ./seed.php /var/www/html/
+# Copier le helper CSRF
+COPY ./csrf_helper.php /var/www/
 # Copier composer.json et installer les dépendances
 COPY ./composer.json /var/www/html/
 WORKDIR /var/www/html

@@ -3,6 +3,7 @@
 $VULNERABILITY = true; // true = vulnérable, false = sécurisé
 
 require 'vendor/autoload.php';
+require_once 'jwt_utils.php';
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
@@ -13,8 +14,8 @@ if ($VULNERABILITY) {
     // ❌ CODE VULNÉRABLE - Clé JWT faible
     $key = "123";
 } else {
-    // ✅ CODE SÉCURISÉ - Clé JWT forte
-    $key = $_ENV['JWT_SECRET'] ?? 'demo_key_for_vulnerability_' . bin2hex(random_bytes(32));
+    // ✅ CODE SÉCURISÉ - Clé JWT forte générée aléatoirement mais persistante
+    $key = $_ENV['JWT_SECRET'] ?? getSecureJwtKey();
     if (strlen($key) < 32) {
         error_log("ATTENTION: Clé JWT trop faible en production !");
     }

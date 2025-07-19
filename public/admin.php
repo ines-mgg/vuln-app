@@ -4,12 +4,17 @@ $VULNERABILITY = true; // true = vulnérable (pas de protection CSRF), false = s
 
 require 'vendor/autoload.php';
 require_once '../csrf_helper.php';
+require_once 'jwt_utils.php';
 csrf_start();
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
-// 🔐 Clé de signature (faible exprès pour test de faille)
-$key = "123";
+// 🔐 Clé de signature selon le mode vulnérable/sécurisé
+if ($VULNERABILITY) {
+    $key = "123"; // ❌ Clé faible pour test de faille
+} else {
+    $key = $_ENV['JWT_SECRET'] ?? getSecureJwtKey(); // ✅ Clé forte générée aléatoirement
+}
 
 // 🔍 Récupérer le token depuis le cookie
 $token = $_COOKIE['token'] ?? '';

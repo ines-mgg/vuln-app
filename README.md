@@ -27,9 +27,11 @@ Après avoir cloner le projet, dans votre terminal, entrez les commandes suivant
 ```bash
 ./setup-https.sh
 
-docker-compose up -d
+docker-compose down -v && docker-compose up --build -d
 
 docker-compose exec web php seed.php
+
+# docker-compose exec web composer install (en cas d'erreur vendor)
 ```
 
 Aller sur l'url <https://localhost>

@@ -7,6 +7,9 @@ services:
       - MONGO_URI=mongodb://mongo:27017/vuln_app
     volumes:
       - ./public:/var/www/html
+      - ./composer.json:/var/www/html/composer.json
+      - ./vendor:/var/www/html/vendor
+      - ./seed.php:/var/www/html/seed.php
 
   mongo:
     image: mongo:5.0
